@@ -5,6 +5,8 @@
 Expense Tracker là một ứng dụng web giúp người dùng quản lý thu chi cá nhân.
 Người dùng có thể thêm, xoá và theo dõi các giao dịch (income/expense), đồng thời xem tổng quan tài chính theo thời gian.
 
+<img width="1336" height="736" alt="image" src="https://github.com/user-attachments/assets/26a3806b-b310-4ed8-99e7-b06374e6231a" />
+
 ---
 
 ## Mục tiêu
