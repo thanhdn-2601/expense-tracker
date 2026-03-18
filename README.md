@@ -122,7 +122,8 @@ Sử dụng Supabase PostgreSQL với bảng:
 ---
 
 ##  Screenshots
-![alt text](image.png)
+<img width="909" height="778" alt="image" src="https://github.com/user-attachments/assets/8d9fdd54-0b42-45d6-a3cf-5d0c70b57219" />
+
 
 ---
 
