@@ -71,3 +71,42 @@ export function getLastNMonths(n: number): string[] {
 export function truncate(str: string, maxLength: number): string {
   return str.length > maxLength ? `${str.slice(0, maxLength)}…` : str;
 }
+
+/**
+ * Convert an array of transactions to a CSV string and trigger a download.
+ * Runs entirely in the browser — no server required.
+ */
+export function exportTransactionsToCSV(
+  transactions: { id: string; date: string; type: string; category: string; amount: number; note: string }[],
+  filename = 'transactions.csv'
+): void {
+  const header = ['Date', 'Type', 'Category', 'Amount', 'Note'];
+
+  const escape = (val: string | number) => {
+    const str = String(val);
+    return str.includes(',') || str.includes('"') || str.includes('\n')
+      ? `"${str.replace(/"/g, '""')}"`
+      : str;
+  };
+
+  const rows = transactions.map((t) => [
+    escape(t.date),
+    escape(t.type),
+    escape(t.category),
+    escape(t.amount),
+    escape(t.note ?? ''),
+  ]);
+
+  const csv = [header, ...rows].map((r) => r.join(',')).join('\n');
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.style.display = 'none';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}

@@ -1,115 +1,140 @@
-# 💰 Expense Tracker
+# Expense Tracker
 
-A production-ready expense tracker built with **Next.js 14 (App Router)**, **TypeScript**, **TailwindCSS**, **Supabase**, and **Zod**.
+## Giới thiệu
+
+Expense Tracker là một ứng dụng web giúp người dùng quản lý thu chi cá nhân.
+Người dùng có thể thêm, xoá và theo dõi các giao dịch (income/expense), đồng thời xem tổng quan tài chính theo thời gian.
 
 ---
 
-## Project Structure
+## Mục tiêu
+
+* Làm quen với GitHub Copilot Agent Mode
+* Áp dụng Spec Driven Development (SDD)
+* Xây dựng một ứng dụng fullstack hoàn chỉnh
+* Deploy sản phẩm lên môi trường thực tế
+
+---
+
+## Demo
+
+[👉 https://your-app.vercel.app](https://expense-tracker-xpj7.vercel.app/)
+
+---
+
+## ✨ Tính năng chính
+
+* Thêm giao dịch (income / expense)
+* Xoá giao dịch
+* Dashboard:
+
+  * Tổng thu
+  * Tổng chi
+  * Số dư
+* Lọc theo tháng
+* Lọc theo category
+* Export csv
+* Validate dữ liệu với Zod
+* UI responsive
+
+---
+
+## Công nghệ sử dụng
+
+* Next.js 14 (App Router)
+* TypeScript
+* TailwindCSS
+* Supabase (PostgreSQL)
+* Zod
+
+---
+
+## Kiến trúc hệ thống
+
+* Frontend + Backend: Next.js (Server Components + Server Actions)
+* Database: Supabase
+* Validation: Zod
+* Styling: TailwindCSS
+
+---
+
+## Flow phát triển (SDD)
+
+Spec → Copilot generate → chỉnh sửa → test → deploy
+
+---
+
+## Cấu trúc project
 
 ```
 expense-tracker/
 ├── app/
-│   ├── actions/
-│   │   └── transactions.ts   # Server Actions (create, delete)
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx              # Main dashboard page (Server Component)
 ├── components/
-│   ├── DashboardSummary.tsx  # Income / Expense / Balance cards
-│   ├── FilterBar.tsx         # Month + category filter (Client Component)
-│   ├── TransactionForm.tsx   # Add transaction form (Client Component)
-│   ├── TransactionItem.tsx   # Single row with delete (Client Component)
-│   └── TransactionList.tsx   # Renders all rows (Server Component)
 ├── lib/
-│   ├── supabase.ts           # Supabase client + data access layer
-│   ├── utils.ts              # formatCurrency, formatDate, helpers…
-│   └── validations.ts        # Zod schemas
 ├── types/
-│   └── index.ts              # Shared TypeScript types
-├── .env.local.example
-├── next.config.js
-├── tailwind.config.ts
-└── tsconfig.json
 ```
 
 ---
 
-## 1 — Create the Supabase Table
+## Cài đặt & chạy
 
-Open your Supabase project → **SQL Editor** and run:
-
-```sql
--- Main transactions table
-CREATE TABLE transactions (
-  id          UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
-  amount      NUMERIC(15,2) NOT NULL CHECK (amount > 0),
-  type        TEXT        NOT NULL CHECK (type IN ('income', 'expense')),
-  category    TEXT        NOT NULL,
-  note        TEXT        NOT NULL DEFAULT '',
-  date        DATE        NOT NULL,
-  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-
--- Indexes for the filter queries
-CREATE INDEX idx_transactions_date     ON transactions (date);
-CREATE INDEX idx_transactions_category ON transactions (category);
-CREATE INDEX idx_transactions_type     ON transactions (type);
-```
-
----
-
-## 2 — Configure Environment Variables
+### 1. Clone repo
 
 ```bash
-cp .env.local.example .env.local
+git clone <your-repo-url>
+cd expense-tracker
 ```
 
-Find these values in your Supabase project under **Project Settings → API**.
-
----
-
-## 3 — Install Dependencies & Run
+### 2. Cài dependencies
 
 ```bash
 npm install
+```
+
+### 3. Tạo file `.env.local`
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+```
+
+### 4. Run project
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+---
+
+## Database
+
+Sử dụng Supabase PostgreSQL với bảng:
+
+* transactions
+
+  * id
+  * amount
+  * type
+  * category
+  * note
+  * date
 
 ---
 
-## 4 — Build for Production
-
-```bash
-npm run build
-npm start
-```
+##  Screenshots
+![alt text](image.png)
 
 ---
 
-## Features
+## MCP sử dụng
 
-| Feature | Status |
-|---|---|
-| Add income / expense transactions | ✅ |
-| Dashboard: total income, expenses, balance | ✅ |
-| Filter by month | ✅ |
-| Filter by category | ✅ |
-| Delete transactions | ✅ |
-| Zod request validation | ✅ |
-| Loading states & spinners | ✅ |
-| Error handling (DB + form) | ✅ |
-| Currency formatting (Intl API) | ✅ |
-| Responsive layout | ✅ |
-| Strong TypeScript typing | ✅ |
+* Context7 (hỗ trợ tra cứu tài liệu trong quá trình phát triển)
 
 ---
 
-## Tech Stack
+## Kết quả đạt được
 
-- **Next.js 14** — App Router, Server Components, Server Actions
-- **TypeScript** — strict mode throughout
-- **TailwindCSS** — utility-first styling
-- **Supabase** — PostgreSQL database + JS client
-- **Zod** — runtime schema validation
+* Xây dựng thành công ứng dụng fullstack
+* Áp dụng được SDD vào thực tế
+* Sử dụng Copilot để tăng tốc phát triển
+* Deploy thành công lên Vercel

@@ -104,7 +104,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         />
 
         <Suspense fallback={<TransactionSkeleton />}>
-          <TransactionList transactions={transactions} />
+          <TransactionList transactions={transactions} exportLabel={filters.month} />
         </Suspense>
       </div>
     </main>
